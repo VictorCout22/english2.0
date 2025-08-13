@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos de Vocabulário Culinário</title>
+    <style>
+        @font-face {
+            font-family: 'museo-sans-rounded';
+            src: url('https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-700-webfont.eot');
+            src: url('https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-700-webfont.eot?#iefix') format('embedded-opentype'),
+                    url('https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-700-webfont.woff2') format('woff2'),
+                    url('https://d7mj4aqfscim2.cloudfront.com/proxy/fonts/museo/museosansrounded-700-webfont.woff') format('woff'),
+                    url('https://d7mj4aqfscim2.cloudfront.com/proxy/fonts/museo/museosansrounded-700-webfont.svg#museo_sans_rounded700') format('svg');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'museo-sans-rounded', sans-serif;
+            background-color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            color: #4b4b4b;
+        }
+
+        .main-content-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            box-sizing: border-box;
+            opacity: 1;
+            visibility: visible;
+            max-width: 600px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            background-color: transparent;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .content-flex-container {
+            display: block;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2d2d2d;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .question-box {
+            padding: 30px 20px;
+            background-color: white;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .word-to-translate {
+            font-size: 32px;
+            color: #2d2d2d;
+            margin: 20px 0 10px;
+            font-weight: 600;
+        }
+
+        .word-and-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0 10px;
+        }
+
+        .answer-input-container {
+            position: relative;
+            margin-top: 16px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e5e5e5;
+            border-bottom-width: 3px;
+            border-radius: 11px;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+            transition: all 0.2s;
+            color: #2d2d2d;
+            font-family: 'museo-sans-rounded', sans-serif;
+            font-weight: 700;
+            background-color: #fff;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #e5e5e5;
+            border-bottom-width: 5px;
+            box-shadow: none;
+        }
+
+        .answer-input[disabled] {
+            cursor: not-allowed;
+            background-color: #f7f7f7;
+            color: #a5a5a5;
+        }
+
+        .answer-input::placeholder {
+            color: #666 !important;
+            font-family: 'museo-sans-rounded', sans-serif !important;
+            font-weight: 700;
+            opacity: 1;
+        }
+
+        .answer-input.correct {
+            border-color: #58cc02;
+            border-bottom-color: #4bb302;
+            background-color: #d7ffb8;
+            color: #58cc02;
+        }
+
+        .answer-input.incorrect {
+            border-color: #ff4b4b;
+            border-bottom-color: #e04343;
+            background-color: #ffdde0;
+            color: #ff4b4b;
+        }
+
+        .feedback-message {
+            margin-top: 10px;
+            min-height: 20px;
+            font-weight: bold;
+        }
+
+        .feedback-message.correct {
+            color: #58cc02;
+        }
+
+        .feedback-message.incorrect {
+            color: #ff4b4b;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .action-button {
+            width: 50%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .action-button.verify {
+            background-color: #58cc02;
+            box-shadow: 0 4px 0 #4bb302;
+        }
+        .action-button.verify:hover {
+            background-color: #5de604;
+        }
+        .action-button.verify:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #4bb302;
+        }
+
+        .action-button.next {
+            background-color: #1cb0f6;
+            box-shadow: 0 4px 0 #1898e0;
+        }
+        .action-button.next:hover {
+            background-color: #20b6ff;
+        }
+        .action-button.next:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1898e0;
+        }
+        
+        .menu {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .menu h2 {
+            font-size: 24px;
+            color: #2d2d2d;
+            margin-top: 0;
+        }
+
+        .menu p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .start-button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background-color: #58cc02;
+            box-shadow: 0 4px 0 #4bb302;
+        }
+
+        .start-button:hover {
+            background-color: #5de604;
+        }
+
+        .start-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #4bb302;
+        }
+        
+        .game-selection-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .game-selection-buttons button {
+            width: 100%;
+            background-color: #e5e5e5;
+            color: #4b4b4b;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .game-selection-buttons button:hover {
+            background-color: #dcdcdc;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .game-header .logo {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .multiple-choice-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-button {
+            padding: 15px;
+            border: 2px solid #e5e5e5;
+            border-bottom-width: 5px;
+            border-radius: 9px;
+            background-color: #fff;
+            font-family: 'museo-sans-rounded', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-button:hover {
+            background-color: #f7f7f7;
+        }
+
+        .option-button.selected {
+            background-color: #1cb0f6;
+            color: white;
+            border-color: #1cb0f6;
+            border-bottom-color: #1898e0;
+        }
+
+        .option-button.correct {
+            background-color: #d7ffb8;
+            color: #58cc02;
+            border-color: #58cc02;
+            border-bottom-color: #4bb302;
+        }
+
+        .option-button.incorrect {
+            background-color: #ffdde0;
+            color: #ff4b4b;
+            border-color: #ff4b4b;
+            border-bottom-color: #e04343;
+        }
+
+        .match-game-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .match-item {
+            padding: 15px;
+            border: 2px solid #e5e5e5;
+            border-bottom-width: 5px;
+            border-radius: 9px;
+            background-color: #fff;
+            font-family: 'museo-sans-rounded', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .match-item:hover {
+            background-color: #f7f7f7;
+        }
+
+        .match-item.selected {
+            background-color: #1cb0f6;
+            color: white;
+            border-color: #1cb0f6;
+            border-bottom-color: #1898e0;
+        }
+
+        .match-item.correct {
+            background-color: #d7ffb8;
+            color: #58cc02;
+            border-color: #58cc02;
+            border-bottom-color: #4bb302;
+        }
+
+        .match-item.incorrect {
+            background-color: #ffdde0;
+            color: #ff4b4b;
+            border-color: #ff4b4b;
+            border-bottom-color: #e04343;
+        }
+
+        @media (max-width: 600px) {
+            .action-button {
+                width: 100%;
+            }
+            .button-container {
+                display: block;
+            }
+            .multiple-choice-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content-wrapper">
+        <div class="container">
+            <div id="game-container">
+                </div>
+        </div>
+    </div>
+    
+    <script>
+          const vocabulary = [
+
+            { english: 'stare', portuguese: 'olhar fixamente', sentence: 'He likes to ___ at the stars for hours.' },
+
+            { english: 'squint', portuguese: 'apertar os olhos', sentence: 'He had to ___ to read the small text.' },
+
+            { english: 'look', portuguese: 'olhar', sentence: 'She will ___ at the picture.' },
+
+            { english: 'sip', portuguese: 'tomar um gole', sentence: 'She took a small ___ of her hot coffee.' },
+
+            { english: 'eat', portuguese: 'comer', sentence: 'They will ___ dinner together tonight.' },
+
+            { english: 'nibble', portuguese: 'petiscar', sentence: 'The rabbit likes to ___ on carrots.' },
+
+            { english: 'gobble', portuguese: 'devorar', sentence: 'The hungry child will ___ his food.' },
+
+            { english: 'tidy up', portuguese: 'arrumar algo', sentence: 'Before the guests arrive, we should ___ the living room.' },
+
+            { english: 'scrub', portuguese: 'esfregar', sentence: 'You need to ___ the floor to get it clean.' }
+
+        ];
+
+        const gameContainer = document.getElementById('game-container');
+        let totalItems = 5;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function showMenu() {
+            gameContainer.innerHTML = `
+                <div class="menu">
+                    <h2>Escolha um Jogo</h2>
+                    <p>Vamos praticar vocabulário com comidas?</p>
+                    <div class="game-selection-buttons">
+                        <button onclick="startGame('match')">Combinar Palavras</button>
+                        <button onclick="startGame('multipleChoice')">Múltipla Escolha</button>
+                        <button onclick="startGame('whatsTheWord')">Qual é a Palavra?</button>
+                        <button onclick="startGame('fillInTheBlank')">Complete a Frase</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showGameHeader() {
+            gameContainer.innerHTML = `
+                <div class="game-header">
+                    <img src="https://www.flaticon.com/svg/static/icons/svg/2539/2539749.svg" alt="Back to menu" class="logo" onclick="showMenu()">
+                </div>
+                <div id="game-content"></div>
+            `;
+        }
+
+        function showFeedback(message, isCorrect) {
+            const feedbackEl = document.getElementById('feedback');
+            if (feedbackEl) {
+                feedbackEl.textContent = message;
+                feedbackEl.className = 'feedback-message ' + (isCorrect ? 'correct' : 'incorrect');
+            }
+        }
+
+        let currentGameType = '';
+        let gameItems = [];
+        let currentItemIndex = 0;
+
+        function startGame(gameType) {
+            currentGameType = gameType;
+            gameItems = shuffleArray([...vocabulary]).slice(0, totalItems);
+            currentItemIndex = 0;
+            showGameHeader();
+            if (gameType === 'match') {
+                setupMatchGame();
+            } else {
+                loadNextQuestion();
+            }
+        }
+        
+        function loadNextQuestion() {
+            if (currentItemIndex < totalItems) {
+                const item = gameItems[currentItemIndex];
+                const gameContent = document.getElementById('game-content');
+                
+                gameContent.innerHTML = '';
+                
+                if (currentGameType === 'multipleChoice') {
+                    setupMultipleChoiceQuestion(item);
+                } else if (currentGameType === 'whatsTheWord') {
+                    setupWhatsTheWordQuestion(item);
+                } else if (currentGameType === 'fillInTheBlank') {
+                    setupFillInTheBlankQuestion(item);
+                }
+            } else {
+                showFinalMessage();
+            }
+        }
+        
+        function showFinalMessage() {
+            gameContainer.innerHTML = `
+                <div class="menu">
+                    <h2>Parabéns!</h2>
+                    <p>Você completou o jogo. Continue praticando para memorizar todas as palavras!</p>
+                    <button class="start-button" onclick="showMenu()">Voltar ao Menu</button>
+                </div>
+            `;
+        }
+        
+        function handleCorrectAnswer() {
+            currentItemIndex++;
+            showFeedback('Correto!', true);
+            setTimeout(() => {
+                const feedbackEl = document.getElementById('feedback');
+                if (feedbackEl) feedbackEl.innerHTML = '';
+                loadNextQuestion();
+            }, 1000);
+        }
+        
+        function handleIncorrectAnswer(correctAnswer) {
+            showFeedback(`Incorreto. A resposta correta é "${correctAnswer}".`, false);
+        }
+        
+        // --- JOGO DE COMBINAR PALAVRAS (MATCH) ---
+        let selectedCards = [];
+        let matchedPairs = 0;
+        
+        function setupMatchGame() {
+            const gameContent = document.getElementById('game-content');
+            matchedPairs = 0;
+
+            const cards = [];
+            gameItems.forEach(item => {
+                cards.push({ text: item.english, id: item.english });
+                cards.push({ text: item.portuguese, id: item.english });
+            });
+            
+            const shuffledCards = shuffleArray(cards);
+            
+            const cardGrid = document.createElement('div');
+            cardGrid.className = 'match-game-container';
+            
+            shuffledCards.forEach(cardItem => {
+                const card = document.createElement('div');
+                card.className = 'match-item';
+                card.textContent = cardItem.text;
+                card.dataset.id = cardItem.id;
+                
+                card.addEventListener('click', () => handleMatchClick(card));
+                cardGrid.appendChild(card);
+            });
+            
+            gameContent.innerHTML = `
+                <h2>Combinar Palavras</h2>
+                <p>Clique para encontrar os pares de tradução.</p>
+                <div id="feedback" class="feedback-message"></div>
+            `;
+            gameContent.appendChild(cardGrid);
+        }
+        
+        function handleMatchClick(card) {
+            if (card.classList.contains('selected') || card.classList.contains('correct') || selectedCards.length >= 2) {
+                return;
+            }
+
+            card.classList.add('selected');
+            selectedCards.push(card);
+
+            if (selectedCards.length === 2) {
+                const [card1, card2] = selectedCards;
+
+                if (card1.dataset.id === card2.dataset.id) {
+                    showFeedback('Parabéns, você encontrou um par!', true);
+                    card1.classList.remove('selected');
+                    card2.classList.remove('selected');
+                    card1.classList.add('correct');
+                    card2.classList.add('correct');
+                    
+                    matchedPairs++;
+                    if (matchedPairs === totalItems) {
+                        setTimeout(() => {
+                            showFeedback('Você completou o jogo!', true);
+                            setTimeout(showFinalMessage, 2000);
+                        }, 1000);
+                    }
+                } else {
+                    showFeedback('Não é um par. Tente novamente!', false);
+                    setTimeout(() => {
+                        card1.classList.remove('selected');
+                        card2.classList.remove('selected');
+                        showFeedback('', false);
+                    }, 1000);
+                }
+                selectedCards = [];
+            }
+        }
+
+
+        // --- MÚLTIPLA ESCOLHA ---
+        function setupMultipleChoiceQuestion(item) {
+            const gameContent = document.getElementById('game-content');
+            
+            const questionText = item.portuguese;
+            const correctAnswer = item.english;
+            
+            const wrongItems = shuffleArray(vocabulary.filter(i => i.english !== correctAnswer)).slice(0, 3);
+            const options = [...wrongItems.map(i => i.english), correctAnswer];
+            shuffleArray(options);
+
+            gameContent.innerHTML = `
+                <div class="question-box">
+                    <h2>Múltipla Escolha</h2>
+                    <p>Como se diz "<strong>${questionText}</strong>"?</p>
+                    <div id="feedback" class="feedback-message"></div>
+                    <div class="multiple-choice-options">
+                        ${options.map(opt => `<button class="option-button">${opt}</button>`).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('.option-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const selected = e.target;
+                    
+                    document.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+                    
+                    if (selected.textContent === correctAnswer) {
+                        selected.classList.add('correct');
+                        handleCorrectAnswer();
+                    } else {
+                        selected.classList.add('incorrect');
+                        const correctButton = Array.from(document.querySelectorAll('.option-button')).find(b => b.textContent === correctAnswer);
+                        if(correctButton) correctButton.classList.add('correct');
+                        
+                        showFeedback(`Incorreto. A resposta era "${correctAnswer}".`, false);
+                        setTimeout(() => {
+                            currentItemIndex++;
+                            loadNextQuestion();
+                        }, 2000);
+                    }
+                });
+            });
+        }
+
+        // --- QUAL É A PALAVRA? ---
+        function setupWhatsTheWordQuestion(item) {
+            const gameContent = document.getElementById('game-content');
+            
+            gameContent.innerHTML = `
+                <div class="question-box">
+                    <h2>Qual é a Palavra?</h2>
+                    <p>Digite a tradução de "<strong>${item.portuguese}</strong>".</p>
+                    <div id="feedback" class="feedback-message"></div>
+                    <div class="answer-input-container">
+                        <input type="text" id="answer-input" class="answer-input" placeholder="Sua resposta">
+                    </div>
+                    <div class="button-container">
+                        <button id="verify-btn" class="action-button verify">Verificar</button>
+                    </div>
+                </div>
+            `;
+
+            const input = document.getElementById('answer-input');
+            const verifyBtn = document.getElementById('verify-btn');
+            
+            const handleCheck = () => {
+                const userAnswer = input.value.trim().toLowerCase();
+                if (userAnswer === item.english.toLowerCase()) {
+                    input.classList.add('correct');
+                    input.disabled = true;
+                    verifyBtn.classList.remove('verify');
+                    verifyBtn.classList.add('next');
+                    verifyBtn.textContent = 'Próximo';
+                    
+                    input.onkeyup = (event) => {
+                        if (event.key === 'Enter') {
+                            handleCorrectAnswer();
+                        }
+                    };
+                    
+                    verifyBtn.onclick = handleCorrectAnswer;
+                    showFeedback('Excelente!', true);
+                } else {
+                    input.classList.add('incorrect');
+                    showFeedback(`Incorreto. Tente novamente!`, false);
+                    setTimeout(() => {
+                        input.classList.remove('incorrect');
+                        input.focus();
+                        showFeedback('', false);
+                    }, 2000);
+                }
+            };
+            
+            verifyBtn.onclick = handleCheck;
+            input.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    if (!input.classList.contains('correct')) {
+                        handleCheck();
+                    }
+                }
+            });
+            input.focus();
+        }
+
+        // --- COMPLETE A FRASE ---
+        function setupFillInTheBlankQuestion(item) {
+            const gameContent = document.getElementById('game-content');
+            
+            const sentenceWithBlank = item.sentence.replace(item.english, '<span style="color:#1cb0f6;">___</span>');
+            
+            gameContent.innerHTML = `
+                <div class="question-box">
+                    <h2>Complete a Frase</h2>
+                    <p>Qual palavra em inglês completa a frase?<br>"${sentenceWithBlank}"</p>
+                    <div id="feedback" class="feedback-message"></div>
+                    <div class="answer-input-container">
+                        <input type="text" id="answer-input" class="answer-input" placeholder="Sua resposta">
+                    </div>
+                    <div class="button-container">
+                        <button id="verify-btn" class="action-button verify">Verificar</button>
+                    </div>
+                </div>
+            `;
+            
+            const input = document.getElementById('answer-input');
+            const verifyBtn = document.getElementById('verify-btn');
+            
+            const handleCheck = () => {
+                const userAnswer = input.value.trim().toLowerCase();
+                if (userAnswer === item.english.toLowerCase()) {
+                    input.classList.add('correct');
+                    input.disabled = true;
+                    verifyBtn.classList.remove('verify');
+                    verifyBtn.classList.add('next');
+                    verifyBtn.textContent = 'Próximo';
+
+                    input.onkeyup = (event) => {
+                        if (event.key === 'Enter') {
+                            handleCorrectAnswer();
+                        }
+                    };
+
+                    verifyBtn.onclick = handleCorrectAnswer;
+                    showFeedback('Perfeito!', true);
+                } else {
+                    input.classList.add('incorrect');
+                    showFeedback(`Não foi dessa vez. Tente novamente!`, false);
+                    setTimeout(() => {
+                        input.classList.remove('incorrect');
+                        input.focus();
+                        showFeedback('', false);
+                    }, 2000);
+                }
+            };
+            
+            verifyBtn.onclick = handleCheck;
+            input.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    if (!input.classList.contains('correct')) {
+                        handleCheck();
+                    }
+                }
+            });
+            input.focus();
+        }
+
+        document.addEventListener('DOMContentLoaded', showMenu);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - Jogos de Vocabulário</title>
+    <style>
+        @font-face {
+            font-family: 'museo-sans-rounded';
+            src: url('https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-700-webfont.eot');
+            src: url('https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-700-webfont.eot?#iefix') format('embedded-opentype'),
+                    url('https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-700-webfont.woff2') format('woff2'),
+                    url('https://d7mj4aqfscim2.cloudfront.com/proxy/fonts/museo/museosansrounded-700-webfont.woff') format('woff'),
+                    url('https://d7mj4aqfscim2.cloudfront.com/proxy/fonts/museo/museosansrounded-700-webfont.svg#museo_sans_rounded700') format('svg');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'museo-sans-rounded', sans-serif;
+            background-color: white;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #4b4b4b;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #2d2d2d;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .header p {
+            font-size: 18px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .course-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .course-block {
+            background-color: white;
+            border: 2px solid #e5e5e5;
+            border-bottom-width: 5px;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative; /* Adicionado para posicionamento relativo do separador */
+        }
+
+        .course-block:hover {
+            transform: translateY(-3px);
+            border-color: #dcdcdc;
+        }
+
+        .course-block:active {
+            transform: translateY(0);
+            border-bottom-width: 5px;
+        }
+        
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #d7ffb8;
+            margin-right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .course-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .course-info h3 {
+            font-size: 20px;
+            color: #2d2d2d;
+            margin: 0;
+        }
+
+        .course-info p {
+            font-size: 16px;
+            color: #666;
+            margin: 5px 0 0;
+        }
+
+        .day-separator {
+            font-size: 14px;
+            font-weight: 700;
+            color: #777;
+            text-align: left;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header">
+            <h1>Escolha um Tema para Praticar</h1>
+            <p>Clique em um bloco para começar os exercícios de vocabulário.</p>
+        </div>
+
+        <div class="course-list">
+            <div class="day-separator">Dia 1</div>
+
+            <a style="text-decoration:none" href="foods.html" class="course-block">
+                <div class="course-icon">
+                    <img src="icecream.png" style="width:100%; height:100%" alt="Ícone de Comida">
+                </div>
+                <div class="course-info">
+                    <h3>Foods</h3>
+                    <p>Vocabulário de alimentos, verbos de culinária e adjetivos de sabor.</p>
+                </div>
+            </a>
+            
+            <a style="text-decoration:none" href="verbs01.html" class="course-block">
+                <div class="course-icon">
+                    <img src="https://www.flaticon.com/svg/static/icons/svg/2539/2539749.svg" style="width:100%; height:100%" alt="Ícone de Comida">
+                </div>
+                <div class="course-info">
+                    <h3>Verbs 01</h3>
+                    <p>Verbs vocabulary.</p>
+                </div>
+            </a>
+            <a style="text-decoration:none" href="animals.html" class="course-block">
+                <div class="course-icon">
+                    <img src="lion.png" style="width:120%; height:120%" alt="Ícone de Animais">
+                </div>
+                <div class="course-info">
+                    <h3>Animals</h3>
+                    <p>Nomes de animais, seus sons e habitats.</p>
+                </div>
+            </a>
+            <div class="day-separator">Dia 2</div>
+
+            
+        </div>
+    </div>
+
+</body>
+</html>
